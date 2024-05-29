@@ -1,5 +1,7 @@
 package model;
 
+import lombok.AccessLevel;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,17 +11,15 @@ import javax.persistence.Id;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
+@Data
 public class Note {
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     private static final AtomicLong generator = new AtomicLong(0);
-    @Getter
     @Id
     private Long id;
-    @Getter
-    @Setter
     @Column
     private String text;
-    @Getter
-    @Setter
     @Column
     private Set<String> labels;
 

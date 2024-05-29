@@ -8,15 +8,17 @@ import java.util.Scanner;
 import java.util.Set;
 
 public interface NoteDao {
-    public void help();
+    public String printHelp();
 
-    public boolean newNote(Scanner scanner);
+    public void createNewNote(Note note);
 
-    public ArrayList<Note> getNotes(Scanner scanner);
+    public ArrayList<Note> getNotesByLabels(Set<String> labels);
 
-    public boolean removeNote(Scanner scanner);
+    public boolean removeNote(long id);
 
     public boolean exportNote();
 
     public void exitNoteEditor();
+
+    public ArrayList<Note> getAllNotes();
 }

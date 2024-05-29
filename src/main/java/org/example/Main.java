@@ -1,6 +1,8 @@
 package org.example;
+
 import dao.NoteDao;
 import service.NoteServiceImpl;
+
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,27 +14,27 @@ public class Main {
         final Logger logger = Logger.getLogger(NoteDao.class.getName());
         logger.log(Level.FINE, "Программа запущена");
         Scanner scanner = new Scanner(System.in);
-        String answer;
         NoteServiceImpl noteService = new NoteServiceImpl();
+        String answer;
         while (true) {
             answer = scanner.nextLine();
             switch (answer) {
                 case ("help"):
-                    noteService.help();
+                    System.out.println(noteService.printHelp());
                     break;
-                case("note-new"):
-                    noteService.newNote(scanner);
+                case ("note-new"):
+                    noteService.createNewNote(scanner);
                     break;
-                case("note-list"):
-                    System.out.println(noteService.getNotes(scanner));;
+                case ("note-list"):
+                    System.out.println(noteService.getNotes(scanner));
                     break;
-                case("note-remove"):
+                case ("note-remove"):
                     noteService.removeNote(scanner);
                     break;
-                case("note-export"):
+                case ("note-export"):
                     noteService.exportNote();
                     break;
-                case("exit"):
+                case ("exit"):
                     noteService.exitNoteEditor();
                     break;
                 default:

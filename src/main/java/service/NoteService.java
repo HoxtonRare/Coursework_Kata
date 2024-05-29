@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public interface NoteService {
-    public void help();
+    public String printHelp();
 
-    public boolean newNote(Scanner scanner);
+    public boolean createNewNote(Scanner scanner);
 
     public ArrayList<Note> getNotes(Scanner scanner);
 

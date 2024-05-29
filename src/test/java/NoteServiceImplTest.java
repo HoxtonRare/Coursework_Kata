@@ -37,7 +37,7 @@ public class NoteServiceImplTest {
         System.setIn(testIn);
         Scanner scanner = new Scanner(System.in);
 
-        noteService.newNote(scanner);
+        noteService.createNewNote(scanner);
         testIn = new ByteArrayInputStream(space.getBytes());
         System.setIn(testIn);
         scanner = new Scanner(System.in);
@@ -49,25 +49,25 @@ public class NoteServiceImplTest {
     @DisplayName("Генерирование уникальных id")
     void testGenerateUniqueId() {
         int numberOfNotes = 50;
-        int result = numberOfNotes*2;
+        int result = numberOfNotes * 2;
         Set<String> labels = new HashSet<>();
         Set<Long> ids = new HashSet<>();
         ArrayList<Note> notes = new ArrayList<>();
         labels.add("метка");
         labels.add("ещёметка");
-        for(int i = 0; i < numberOfNotes; i++) {
+        for (int i = 0; i < numberOfNotes; i++) {
             notes.add(new Note("текст", labels));
         }
-        for(Note note : notes){
+        for (Note note : notes) {
             ids.add(note.getId());
         }
         assertEquals(numberOfNotes, ids.size());
 
         notes.clear();
-        for(int i = 0; i < numberOfNotes; i++) {
+        for (int i = 0; i < numberOfNotes; i++) {
             notes.add(new Note("текст", labels));
         }
-        for(Note note : notes){
+        for (Note note : notes) {
             ids.add(note.getId());
         }
         assertEquals(result, ids.size());
@@ -75,31 +75,31 @@ public class NoteServiceImplTest {
 
     @Test
     @DisplayName("Валидация тела заметки")
-    void testValidatorTextOfNote(){
+    void testValidatorTextOfNote() {
         String in = String.join(System.lineSeparator(),
                 "За", "метка метка"
         ) + System.lineSeparator();
         ByteArrayInputStream testIn = new ByteArrayInputStream(in.getBytes());
         System.setIn(testIn);
         Scanner scanner = new Scanner(System.in);
-        assertFalse(noteService.newNote(scanner));
+        assertFalse(noteService.createNewNote(scanner));
     }
 
     @Test
     @DisplayName("Валидация меток")
-    void testValidatorLabelOfNote(){
+    void testValidatorLabelOfNote() {
         String in = String.join(System.lineSeparator(),
                 "Заметка", "метка21"
         ) + System.lineSeparator();
         ByteArrayInputStream testIn = new ByteArrayInputStream(in.getBytes());
         System.setIn(testIn);
         Scanner scanner = new Scanner(System.in);
-        assertFalse(noteService.newNote(scanner));
+        assertFalse(noteService.createNewNote(scanner));
     }
 
     @Test
     @DisplayName("Валидация id")
-    void testValidatorIdOfNote(){
+    void testValidatorIdOfNote() {
         String in = "Проверка";
         ByteArrayInputStream testIn = new ByteArrayInputStream(in.getBytes());
         System.setIn(testIn);
@@ -109,7 +109,7 @@ public class NoteServiceImplTest {
 
     @Test
     @DisplayName("Удаление заметок")
-    void testRemoveNotes(){
+    void testRemoveNotes() {
         String space = " ";
         String id = "1";
         String in = String.join(System.lineSeparator(),
@@ -120,7 +120,7 @@ public class NoteServiceImplTest {
         System.setIn(testIn);
         Scanner scanner = new Scanner(System.in);
 
-        noteService.newNote(scanner);
+        noteService.createNewNote(scanner);
 
         testIn = new ByteArrayInputStream(id.getBytes());
         System.setIn(testIn);
@@ -134,5 +134,19 @@ public class NoteServiceImplTest {
 
         notes = noteService.getNotes(scanner);
         assertTrue(notes.isEmpty());
+    }
+
+    @Test
+    @DisplayName("Отображение help")
+    void testPrintHelp() {
+        String expected = "Список доступных команд: \n" +
+                "help - выводит на экран список доступных команд с их описанием\n" +
+                "note-new  - создать новую заметку\n" +
+                "note-list - выводит все заметки на экран\n" +
+                "note-remove - удаляет заметку\n" +
+                "note-export - сохраняет все заметки в текстовый файл и выводит имя сохраненного файла\n" +
+                "exit - выход из приложения";
+
+        assertEquals(expected, noteService.printHelp());
     }
 }
