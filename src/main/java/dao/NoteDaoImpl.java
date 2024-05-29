@@ -14,6 +14,8 @@ import java.util.logging.*;
 
 
 public class NoteDaoImpl implements NoteDao {
+    private final LocalDateTime now = LocalDateTime.now();
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd_HH-mm-ss");
     private final Logger logger = Logger.getLogger(NoteDao.class.getName());
     private ArrayList<Note> notes = new ArrayList<>();
 
@@ -107,8 +109,6 @@ public class NoteDaoImpl implements NoteDao {
 
     @Override
     public boolean exportNote() {
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd_HH-mm-ss");
         logger.log(Level.FINE, "Вызвана команда exportNote");
         String formattedDateTime = now.format(formatter);
         String filename = "notes_" + formattedDateTime + " .txt";
